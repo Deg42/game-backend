@@ -22,7 +22,7 @@ public class GameMapValidatorTest {
     }
 
     @Test
-    public void whenValidTerrainMatrix_thenNoViolations() {
+    void whenValidTerrainMatrix_thenNoViolations() {
         Terrain[][] terrains = {
                 { new Terrain(TerrainType.LAND), new Terrain(TerrainType.SEA) },
                 { new Terrain(TerrainType.MOUNTAIN), new Terrain(TerrainType.LAND) }
@@ -35,7 +35,7 @@ public class GameMapValidatorTest {
     }
 
     @Test
-    public void whenNonRectangularMatrix_thenViolations() {
+    void whenNonRectangularMatrix_thenViolations() {
         Terrain[][] terrains = {
                 { new Terrain(TerrainType.LAND), new Terrain(TerrainType.SEA) },
                 { new Terrain(TerrainType.MOUNTAIN) }
@@ -48,7 +48,7 @@ public class GameMapValidatorTest {
     }
 
     @Test
-    public void whenMatrixContainsNullTerrain_thenViolations() {
+    void whenMatrixContainsNullTerrain_thenViolations() {
         Terrain[][] terrains = {
                 { new Terrain(TerrainType.LAND), null },
                 { new Terrain(TerrainType.MOUNTAIN), new Terrain(TerrainType.LAND) }
@@ -59,17 +59,4 @@ public class GameMapValidatorTest {
         Set<ConstraintViolation<GameMap>> violations = validator.validate(gameMap);
         assertFalse(violations.isEmpty());
     }
-
-//    @Test
-//    public void whenMatrixContainsNullTerrainType_thenViolations() {
-//        Terrain[][] terrains = {
-//                { new Terrain(TerrainType.LAND), new Terrain() },
-//                { new Terrain(TerrainType.MOUNTAIN), new Terrain(TerrainType.LAND) }
-//        };
-//        GameMap gameMap = new GameMap();
-//        gameMap.setTerrains(terrains);
-//
-//        Set<ConstraintViolation<GameMap>> violations = validator.validate(gameMap);
-//        assertFalse(violations.isEmpty());
-//    }
 }

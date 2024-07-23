@@ -13,6 +13,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import javax.validation.ValidationException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class GameMapHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
         JsonNode jsonNode = objectMapper.readTree(message.getPayload());
         String action = jsonNode.get("action").asText();
 
@@ -39,7 +40,7 @@ public class GameMapHandler extends TextWebSocketHandler {
                 handleFindAction(session, jsonNode);
                 break;
             case "getAll":
-                handleGetAllAction(session, jsonNode);
+                handleGetAllAction(session);
                 break;
             default:
                 session.sendMessage(new TextMessage("Invalid action: " + action));
@@ -51,7 +52,7 @@ public class GameMapHandler extends TextWebSocketHandler {
         // Acción después de cerrar la conexión, si es necesario
     }
 
-    private void handleSaveAction(WebSocketSession session, JsonNode jsonNode) throws Exception {
+    private void handleSaveAction(WebSocketSession session, JsonNode jsonNode) throws IllegalArgumentException, IOException {
         try {
             GameMap map = objectMapper.treeToValue(jsonNode.get("data"), GameMap.class);
             GameMapValidator.validateGameMap(map);
@@ -62,7 +63,7 @@ public class GameMapHandler extends TextWebSocketHandler {
         }
     }
 
-    private void handleFindAction(WebSocketSession session, JsonNode jsonNode) throws Exception {
+    private void handleFindAction(WebSocketSession session, JsonNode jsonNode) throws IOException {
         String id = jsonNode.get("id").asText();
         Optional<GameMap> oMap = gameMapService.findById(id);
         if (oMap.isPresent()) {
@@ -72,7 +73,7 @@ public class GameMapHandler extends TextWebSocketHandler {
         }
     }
 
-    private void handleGetAllAction(WebSocketSession session, JsonNode jsonNode) throws Exception {
+    private void handleGetAllAction(WebSocketSession session) throws IOException {
         List<GameMap> maps = gameMapService.findAll();
         session.sendMessage(new TextMessage(objectMapper.writeValueAsString(maps)));
     }

@@ -3,7 +3,6 @@ package com.deg.gamebackend.service;
 import com.deg.gamebackend.entity.terrain.GameMap;
 import com.deg.gamebackend.repository.GameMapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
