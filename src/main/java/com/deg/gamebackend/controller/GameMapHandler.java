@@ -3,8 +3,6 @@ package com.deg.gamebackend.controller;
 import com.deg.gamebackend.controller.validators.GameMapValidator;
 import com.deg.gamebackend.entity.terrain.GameMap;
 import com.deg.gamebackend.service.GameMapService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
