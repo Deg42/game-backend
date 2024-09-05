@@ -1,8 +1,7 @@
 package com.deg.gamebackend.controller;
 
-import com.deg.gamebackend.controller.validators.GameMapValidator;
 import com.deg.gamebackend.entity.terrain.GameMap;
-import com.deg.gamebackend.service.GameMapService;
+import com.deg.gamebackend.service.gamemap.GameMapService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import javax.validation.ValidationException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -53,14 +51,14 @@ public class GameMapHandler extends TextWebSocketHandler {
     }
 
     private void handleSaveAction(WebSocketSession session, JsonNode jsonNode) throws IllegalArgumentException, IOException {
-        try {
-            GameMap map = objectMapper.treeToValue(jsonNode.get("data"), GameMap.class);
-            GameMapValidator.validateGameMap(map);
-            GameMap savedMap = gameMapService.save(map);
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(savedMap)));
-        } catch (ValidationException e) {
-            session.sendMessage(new TextMessage("Validation error: " + e.getMessage()));
-        }
+//        try {
+        GameMap map = objectMapper.treeToValue(jsonNode.get("data"), GameMap.class);
+//            GameMapValidator.validateGameMap(map);
+        GameMap savedMap = gameMapService.save(map);
+        session.sendMessage(new TextMessage(objectMapper.writeValueAsString(savedMap)));
+//        } catch (ValidationException e) {
+//            session.sendMessage(new TextMessage("Validation error: " + e.getMessage()));
+//        }
     }
 
     private void handleFindAction(WebSocketSession session, JsonNode jsonNode) throws IOException {

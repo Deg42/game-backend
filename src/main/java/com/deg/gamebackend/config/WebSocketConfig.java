@@ -1,8 +1,7 @@
-package com.deg.gamebackend;
+package com.deg.gamebackend.config;
 
 import com.deg.gamebackend.controller.GameMapHandler;
-import com.deg.gamebackend.service.GameMapService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.deg.gamebackend.service.gamemap.GameMapService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
